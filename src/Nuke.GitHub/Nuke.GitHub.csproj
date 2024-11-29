@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <Description>GitHub interaction for NUKE Build</Description>
     <Authors>Georg Dangl</Authors>
     <Copyright>(c) $([System.DateTime]::Now.Year) Georg Dangl</Copyright>
@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Octokit" Version="13.0.1" />
-    <PackageReference Include="Nuke.Common" Version="8.1.2" />
+    <PackageReference Include="Nuke.Common" Version="9.0.1" />
   </ItemGroup>
 
 </Project>

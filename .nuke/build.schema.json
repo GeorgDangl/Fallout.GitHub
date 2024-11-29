@@ -1,50 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "properties": {
-    "Configuration": {
-      "type": "string"
-    },
-    "DanglCiCdTeamsWebhookUrl": {
-      "type": "string"
-    },
-    "DanglPublicFeedSource": {
-      "type": "string"
-    },
-    "DocuBaseUrl": {
-      "type": "string"
-    },
-    "FeedzAccessToken": {
-      "type": "string"
-    },
-    "GitHubAuthenticationToken": {
-      "type": "string"
-    },
-    "KeyVaultBaseUrl": {
-      "type": "string"
-    },
-    "KeyVaultClientId": {
-      "type": "string"
-    },
-    "KeyVaultClientSecret": {
-      "type": "string"
-    },
-    "KeyVaultTenantId": {
-      "type": "string"
-    },
-    "NuGetApiKey": {
-      "type": "string"
-    },
-    "NukeGitHubDocuApiKey": {
-      "type": "string"
-    },
-    "NukeWebDocuDocuApiKey": {
-      "type": "string"
-    },
-    "Solution": {
-      "type": "string",
-      "description": "Path to a solution file that is automatically loaded. Default is Nuke.GitHub.sln"
-    }
-  },
   "definitions": {
     "Host": {
       "type": "string",
@@ -150,5 +105,56 @@
       }
     }
   },
-  "$ref": "#/definitions/NukeBuild"
+  "allOf": [
+    {
+      "properties": {
+        "Configuration": {
+          "type": "string"
+        },
+        "DanglCiCdTeamsWebhookUrl": {
+          "type": "string"
+        },
+        "DanglPublicFeedSource": {
+          "type": "string"
+        },
+        "DocuBaseUrl": {
+          "type": "string"
+        },
+        "FeedzAccessToken": {
+          "type": "string"
+        },
+        "GitHubAuthenticationToken": {
+          "type": "string"
+        },
+        "KeyVaultBaseUrl": {
+          "type": "string"
+        },
+        "KeyVaultClientId": {
+          "type": "string"
+        },
+        "KeyVaultClientSecret": {
+          "type": "string"
+        },
+        "KeyVaultTenantId": {
+          "type": "string"
+        },
+        "NuGetApiKey": {
+          "type": "string"
+        },
+        "NukeGitHubDocuApiKey": {
+          "type": "string"
+        },
+        "NukeWebDocuDocuApiKey": {
+          "type": "string"
+        },
+        "Solution": {
+          "type": "string",
+          "description": "Path to a solution file that is automatically loaded. Default is Nuke.GitHub.sln"
+        }
+      }
+    },
+    {
+      "$ref": "#/definitions/NukeBuild"
+    }
+  ]
 }

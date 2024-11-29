@@ -9,7 +9,7 @@ namespace Nuke.WebDocu
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public class WebDocuSettings : ISettingsEntity
+    public class WebDocuSettings : ToolOptions
     {
         public virtual string SourceDirectory { get; internal set; }
         public virtual string DocuApiKey { get; internal set; }
