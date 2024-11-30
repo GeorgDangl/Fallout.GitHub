@@ -103,7 +103,7 @@ class Build : NukeBuild
         .DependsOn(Clean)
         .Executes(() =>
         {
-            DotNetRestore();
+            DotNet("restore"); // DotNetRestore() should work in NUKE v9.0.2 again
         });
 
     Target Compile => _ => _
