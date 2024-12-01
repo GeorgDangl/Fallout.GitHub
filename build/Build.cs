@@ -103,7 +103,7 @@ class Build : NukeBuild
         .DependsOn(Clean)
         .Executes(() =>
         {
-            DotNetRestore();
+            DotNetRestore(new DotNetRestoreSettings());
         });
 
     Target Compile => _ => _
@@ -126,7 +126,7 @@ class Build : NukeBuild
                 .SetNoBuild(true)
                 .SetProjectFile(RootDirectory / "test" / "Nuke.WebDocu.Tests")
                 .SetTestAdapterPath(".")
-                .CombineWith(c => new[] { "net7.0" }
+                .CombineWith(c => new[] { "net8.0" }
                     .Select(framework => c.SetFramework(framework).SetLoggers($"xunit;LogFilePath={OutputDirectory / $"tests-{framework}.xml"}"))
                 ), degreeOfParallelism: Environment.ProcessorCount, completeOnFailure: true);
         });

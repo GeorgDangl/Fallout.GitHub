@@ -17,490 +17,199 @@ using System.Text;
 namespace Nuke.GitHub;
 
 #region GitHubReleaseSettings
-/// <summary>
-///   Used within <see cref="GitHubTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="GitHubTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
 public partial class GitHubReleaseSettings : GitHubSettings
 {
-    /// <summary>
-    ///   Optional file paths for files that should be appended to a release
-    /// </summary>
-    public virtual string[] ArtifactPaths { get; internal set; }
-    /// <summary>
-    ///   The message for the GitHub release
-    /// </summary>
-    public virtual string ReleaseNotes { get; internal set; }
-    /// <summary>
-    ///   The tag that should be used for the release, e.g. "v1.0.0"
-    /// </summary>
-    public virtual string Tag { get; internal set; }
-    /// <summary>
-    ///   The name of the release. If ommited, the value of <see cref="Tag"/> is used
-    /// </summary>
-    public virtual string Name { get; internal set; }
-    /// <summary>
-    ///   The commit SHA on which to create the release
-    /// </summary>
-    public virtual string CommitSha { get; internal set; }
-    /// <summary>
-    ///   Whether this is a pre-release
-    /// </summary>
-    public virtual bool? Prerelease { get; internal set; } = false;
+    /// <summary>Optional file paths for files that should be appended to a release</summary>
+    public string[] ArtifactPaths => Get<string[]>(() => ArtifactPaths);
+    /// <summary>The message for the GitHub release</summary>
+    public string ReleaseNotes => Get<string>(() => ReleaseNotes);
+    /// <summary>The tag that should be used for the release, e.g. "v1.0.0"</summary>
+    public string Tag => Get<string>(() => Tag);
+    /// <summary>The name of the release. If ommited, the value of <see cref="Tag"/> is used</summary>
+    public string Name => Get<string>(() => Name);
+    /// <summary>The commit SHA on which to create the release</summary>
+    public string CommitSha => Get<string>(() => CommitSha);
+    /// <summary>Whether this is a pre-release</summary>
+    public bool? Prerelease => Get<bool?>(() => Prerelease);
 }
 #endregion
 #region GitHubPullRequestSettings
-/// <summary>
-///   Used within <see cref="GitHubTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="GitHubTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
 public partial class GitHubPullRequestSettings : GitHubSettings
 {
-    /// <summary>
-    ///   The name of the branch you want the changes pulled into
-    /// </summary>
-    public virtual string Base { get; internal set; }
-    /// <summary>
-    ///   The name of the branch where your changes are implemented
-    /// </summary>
-    public virtual string Head { get; internal set; }
-    /// <summary>
-    ///   The title of the pull request
-    /// </summary>
-    public virtual string Title { get; internal set; }
-    /// <summary>
-    ///   The optional contents of the pull request
-    /// </summary>
-    public virtual string Body { get; internal set; }
+    /// <summary>The name of the branch you want the changes pulled into</summary>
+    public string Base => Get<string>(() => Base);
+    /// <summary>The name of the branch where your changes are implemented</summary>
+    public string Head => Get<string>(() => Head);
+    /// <summary>The title of the pull request</summary>
+    public string Title => Get<string>(() => Title);
+    /// <summary>The optional contents of the pull request</summary>
+    public string Body => Get<string>(() => Body);
 }
 #endregion
 #region GitHubSettings
-/// <summary>
-///   Used within <see cref="GitHubTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="GitHubTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class GitHubSettings : ToolSettings
+public partial class GitHubSettings : ToolOptions
 {
-    /// <summary>
-    ///   The account under which the repository is hosted
-    /// </summary>
-    public virtual string RepositoryOwner { get; internal set; }
-    /// <summary>
-    ///   The name of the repository
-    /// </summary>
-    public virtual string RepositoryName { get; internal set; }
-    /// <summary>
-    ///   The Token for the GitHub API
-    /// </summary>
-    public virtual string Token { get; internal set; }
-    /// <summary>
-    ///   The URL for GitHub Enterprise
-    /// </summary>
-    public virtual string Url { get; internal set; }
+    /// <summary>The account under which the repository is hosted</summary>
+    public string RepositoryOwner => Get<string>(() => RepositoryOwner);
+    /// <summary>The name of the repository</summary>
+    public string RepositoryName => Get<string>(() => RepositoryName);
+    /// <summary>The Token for the GitHub API</summary>
+    public string Token => Get<string>(() => Token);
+    /// <summary>The URL for GitHub Enterprise</summary>
+    public string Url => Get<string>(() => Url);
 }
 #endregion
 #region GitHubReleaseSettingsExtensions
-/// <summary>
-///   Used within <see cref="GitHubTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="GitHubTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class GitHubReleaseSettingsExtensions
 {
     #region ArtifactPaths
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubReleaseSettings.ArtifactPaths"/></em></p>
-    ///   <p>Optional file paths for files that should be appended to a release</p>
-    /// </summary>
-    [Pure]
-    public static T SetArtifactPaths<T>(this T toolSettings, string[] artifactPaths) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ArtifactPaths = artifactPaths;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubReleaseSettings.ArtifactPaths"/></em></p>
-    ///   <p>Optional file paths for files that should be appended to a release</p>
-    /// </summary>
-    [Pure]
-    public static T ResetArtifactPaths<T>(this T toolSettings) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ArtifactPaths = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubReleaseSettings.ArtifactPaths"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ArtifactPaths))]
+    public static T SetArtifactPaths<T>(this T o, string[] v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.ArtifactPaths, v));
+    /// <inheritdoc cref="GitHubReleaseSettings.ArtifactPaths"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ArtifactPaths))]
+    public static T ResetArtifactPaths<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.ArtifactPaths));
     #endregion
     #region ReleaseNotes
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubReleaseSettings.ReleaseNotes"/></em></p>
-    ///   <p>The message for the GitHub release</p>
-    /// </summary>
-    [Pure]
-    public static T SetReleaseNotes<T>(this T toolSettings, string releaseNotes) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReleaseNotes = releaseNotes;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubReleaseSettings.ReleaseNotes"/></em></p>
-    ///   <p>The message for the GitHub release</p>
-    /// </summary>
-    [Pure]
-    public static T ResetReleaseNotes<T>(this T toolSettings) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReleaseNotes = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubReleaseSettings.ReleaseNotes"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ReleaseNotes))]
+    public static T SetReleaseNotes<T>(this T o, string v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.ReleaseNotes, v));
+    /// <inheritdoc cref="GitHubReleaseSettings.ReleaseNotes"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ReleaseNotes))]
+    public static T ResetReleaseNotes<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.ReleaseNotes));
     #endregion
     #region Tag
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubReleaseSettings.Tag"/></em></p>
-    ///   <p>The tag that should be used for the release, e.g. "v1.0.0"</p>
-    /// </summary>
-    [Pure]
-    public static T SetTag<T>(this T toolSettings, string tag) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Tag = tag;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubReleaseSettings.Tag"/></em></p>
-    ///   <p>The tag that should be used for the release, e.g. "v1.0.0"</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTag<T>(this T toolSettings) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Tag = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubReleaseSettings.Tag"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Tag))]
+    public static T SetTag<T>(this T o, string v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Tag, v));
+    /// <inheritdoc cref="GitHubReleaseSettings.Tag"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Tag))]
+    public static T ResetTag<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.Tag));
     #endregion
     #region Name
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubReleaseSettings.Name"/></em></p>
-    ///   <p>The name of the release. If ommited, the value of <see cref="Tag"/> is used</p>
-    /// </summary>
-    [Pure]
-    public static T SetName<T>(this T toolSettings, string name) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Name = name;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubReleaseSettings.Name"/></em></p>
-    ///   <p>The name of the release. If ommited, the value of <see cref="Tag"/> is used</p>
-    /// </summary>
-    [Pure]
-    public static T ResetName<T>(this T toolSettings) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Name = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubReleaseSettings.Name"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Name))]
+    public static T SetName<T>(this T o, string v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Name, v));
+    /// <inheritdoc cref="GitHubReleaseSettings.Name"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Name))]
+    public static T ResetName<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.Name));
     #endregion
     #region CommitSha
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubReleaseSettings.CommitSha"/></em></p>
-    ///   <p>The commit SHA on which to create the release</p>
-    /// </summary>
-    [Pure]
-    public static T SetCommitSha<T>(this T toolSettings, string commitSha) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CommitSha = commitSha;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubReleaseSettings.CommitSha"/></em></p>
-    ///   <p>The commit SHA on which to create the release</p>
-    /// </summary>
-    [Pure]
-    public static T ResetCommitSha<T>(this T toolSettings) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CommitSha = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubReleaseSettings.CommitSha"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.CommitSha))]
+    public static T SetCommitSha<T>(this T o, string v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.CommitSha, v));
+    /// <inheritdoc cref="GitHubReleaseSettings.CommitSha"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.CommitSha))]
+    public static T ResetCommitSha<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.CommitSha));
     #endregion
     #region Prerelease
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubReleaseSettings.Prerelease"/></em></p>
-    ///   <p>Whether this is a pre-release</p>
-    /// </summary>
-    [Pure]
-    public static T SetPrerelease<T>(this T toolSettings, bool? prerelease) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Prerelease = prerelease;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubReleaseSettings.Prerelease"/></em></p>
-    ///   <p>Whether this is a pre-release</p>
-    /// </summary>
-    [Pure]
-    public static T ResetPrerelease<T>(this T toolSettings) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Prerelease = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="GitHubReleaseSettings.Prerelease"/></em></p>
-    ///   <p>Whether this is a pre-release</p>
-    /// </summary>
-    [Pure]
-    public static T EnablePrerelease<T>(this T toolSettings) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Prerelease = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="GitHubReleaseSettings.Prerelease"/></em></p>
-    ///   <p>Whether this is a pre-release</p>
-    /// </summary>
-    [Pure]
-    public static T DisablePrerelease<T>(this T toolSettings) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Prerelease = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="GitHubReleaseSettings.Prerelease"/></em></p>
-    ///   <p>Whether this is a pre-release</p>
-    /// </summary>
-    [Pure]
-    public static T TogglePrerelease<T>(this T toolSettings) where T : GitHubReleaseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Prerelease = !toolSettings.Prerelease;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubReleaseSettings.Prerelease"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
+    public static T SetPrerelease<T>(this T o, bool? v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Prerelease, v));
+    /// <inheritdoc cref="GitHubReleaseSettings.Prerelease"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
+    public static T ResetPrerelease<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.Prerelease));
+    /// <inheritdoc cref="GitHubReleaseSettings.Prerelease"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
+    public static T EnablePrerelease<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Prerelease, true));
+    /// <inheritdoc cref="GitHubReleaseSettings.Prerelease"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
+    public static T DisablePrerelease<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Prerelease, false));
+    /// <inheritdoc cref="GitHubReleaseSettings.Prerelease"/>
+    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
+    public static T TogglePrerelease<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Prerelease, !o.Prerelease));
     #endregion
 }
 #endregion
 #region GitHubPullRequestSettingsExtensions
-/// <summary>
-///   Used within <see cref="GitHubTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="GitHubTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class GitHubPullRequestSettingsExtensions
 {
     #region Base
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubPullRequestSettings.Base"/></em></p>
-    ///   <p>The name of the branch you want the changes pulled into</p>
-    /// </summary>
-    [Pure]
-    public static T SetBase<T>(this T toolSettings, string @base) where T : GitHubPullRequestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Base = @base;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubPullRequestSettings.Base"/></em></p>
-    ///   <p>The name of the branch you want the changes pulled into</p>
-    /// </summary>
-    [Pure]
-    public static T ResetBase<T>(this T toolSettings) where T : GitHubPullRequestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Base = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubPullRequestSettings.Base"/>
+    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Base))]
+    public static T SetBase<T>(this T o, string v) where T : GitHubPullRequestSettings => o.Modify(b => b.Set(() => o.Base, v));
+    /// <inheritdoc cref="GitHubPullRequestSettings.Base"/>
+    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Base))]
+    public static T ResetBase<T>(this T o) where T : GitHubPullRequestSettings => o.Modify(b => b.Remove(() => o.Base));
     #endregion
     #region Head
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubPullRequestSettings.Head"/></em></p>
-    ///   <p>The name of the branch where your changes are implemented</p>
-    /// </summary>
-    [Pure]
-    public static T SetHead<T>(this T toolSettings, string head) where T : GitHubPullRequestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Head = head;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubPullRequestSettings.Head"/></em></p>
-    ///   <p>The name of the branch where your changes are implemented</p>
-    /// </summary>
-    [Pure]
-    public static T ResetHead<T>(this T toolSettings) where T : GitHubPullRequestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Head = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubPullRequestSettings.Head"/>
+    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Head))]
+    public static T SetHead<T>(this T o, string v) where T : GitHubPullRequestSettings => o.Modify(b => b.Set(() => o.Head, v));
+    /// <inheritdoc cref="GitHubPullRequestSettings.Head"/>
+    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Head))]
+    public static T ResetHead<T>(this T o) where T : GitHubPullRequestSettings => o.Modify(b => b.Remove(() => o.Head));
     #endregion
     #region Title
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubPullRequestSettings.Title"/></em></p>
-    ///   <p>The title of the pull request</p>
-    /// </summary>
-    [Pure]
-    public static T SetTitle<T>(this T toolSettings, string title) where T : GitHubPullRequestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Title = title;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubPullRequestSettings.Title"/></em></p>
-    ///   <p>The title of the pull request</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTitle<T>(this T toolSettings) where T : GitHubPullRequestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Title = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubPullRequestSettings.Title"/>
+    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Title))]
+    public static T SetTitle<T>(this T o, string v) where T : GitHubPullRequestSettings => o.Modify(b => b.Set(() => o.Title, v));
+    /// <inheritdoc cref="GitHubPullRequestSettings.Title"/>
+    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Title))]
+    public static T ResetTitle<T>(this T o) where T : GitHubPullRequestSettings => o.Modify(b => b.Remove(() => o.Title));
     #endregion
     #region Body
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubPullRequestSettings.Body"/></em></p>
-    ///   <p>The optional contents of the pull request</p>
-    /// </summary>
-    [Pure]
-    public static T SetBody<T>(this T toolSettings, string body) where T : GitHubPullRequestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Body = body;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubPullRequestSettings.Body"/></em></p>
-    ///   <p>The optional contents of the pull request</p>
-    /// </summary>
-    [Pure]
-    public static T ResetBody<T>(this T toolSettings) where T : GitHubPullRequestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Body = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubPullRequestSettings.Body"/>
+    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Body))]
+    public static T SetBody<T>(this T o, string v) where T : GitHubPullRequestSettings => o.Modify(b => b.Set(() => o.Body, v));
+    /// <inheritdoc cref="GitHubPullRequestSettings.Body"/>
+    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Body))]
+    public static T ResetBody<T>(this T o) where T : GitHubPullRequestSettings => o.Modify(b => b.Remove(() => o.Body));
     #endregion
 }
 #endregion
 #region GitHubSettingsExtensions
-/// <summary>
-///   Used within <see cref="GitHubTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="GitHubTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class GitHubSettingsExtensions
 {
     #region RepositoryOwner
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubSettings.RepositoryOwner"/></em></p>
-    ///   <p>The account under which the repository is hosted</p>
-    /// </summary>
-    [Pure]
-    public static T SetRepositoryOwner<T>(this T toolSettings, string repositoryOwner) where T : GitHubSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RepositoryOwner = repositoryOwner;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubSettings.RepositoryOwner"/></em></p>
-    ///   <p>The account under which the repository is hosted</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRepositoryOwner<T>(this T toolSettings) where T : GitHubSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RepositoryOwner = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubSettings.RepositoryOwner"/>
+    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryOwner))]
+    public static T SetRepositoryOwner<T>(this T o, string v) where T : GitHubSettings => o.Modify(b => b.Set(() => o.RepositoryOwner, v));
+    /// <inheritdoc cref="GitHubSettings.RepositoryOwner"/>
+    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryOwner))]
+    public static T ResetRepositoryOwner<T>(this T o) where T : GitHubSettings => o.Modify(b => b.Remove(() => o.RepositoryOwner));
     #endregion
     #region RepositoryName
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubSettings.RepositoryName"/></em></p>
-    ///   <p>The name of the repository</p>
-    /// </summary>
-    [Pure]
-    public static T SetRepositoryName<T>(this T toolSettings, string repositoryName) where T : GitHubSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RepositoryName = repositoryName;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubSettings.RepositoryName"/></em></p>
-    ///   <p>The name of the repository</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRepositoryName<T>(this T toolSettings) where T : GitHubSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RepositoryName = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubSettings.RepositoryName"/>
+    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryName))]
+    public static T SetRepositoryName<T>(this T o, string v) where T : GitHubSettings => o.Modify(b => b.Set(() => o.RepositoryName, v));
+    /// <inheritdoc cref="GitHubSettings.RepositoryName"/>
+    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryName))]
+    public static T ResetRepositoryName<T>(this T o) where T : GitHubSettings => o.Modify(b => b.Remove(() => o.RepositoryName));
     #endregion
     #region Token
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubSettings.Token"/></em></p>
-    ///   <p>The Token for the GitHub API</p>
-    /// </summary>
-    [Pure]
-    public static T SetToken<T>(this T toolSettings, string token) where T : GitHubSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Token = token;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubSettings.Token"/></em></p>
-    ///   <p>The Token for the GitHub API</p>
-    /// </summary>
-    [Pure]
-    public static T ResetToken<T>(this T toolSettings) where T : GitHubSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Token = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubSettings.Token"/>
+    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Token))]
+    public static T SetToken<T>(this T o, string v) where T : GitHubSettings => o.Modify(b => b.Set(() => o.Token, v));
+    /// <inheritdoc cref="GitHubSettings.Token"/>
+    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Token))]
+    public static T ResetToken<T>(this T o) where T : GitHubSettings => o.Modify(b => b.Remove(() => o.Token));
     #endregion
     #region Url
-    /// <summary>
-    ///   <p><em>Sets <see cref="GitHubSettings.Url"/></em></p>
-    ///   <p>The URL for GitHub Enterprise</p>
-    /// </summary>
-    [Pure]
-    public static T SetUrl<T>(this T toolSettings, string url) where T : GitHubSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Url = url;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="GitHubSettings.Url"/></em></p>
-    ///   <p>The URL for GitHub Enterprise</p>
-    /// </summary>
-    [Pure]
-    public static T ResetUrl<T>(this T toolSettings) where T : GitHubSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Url = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="GitHubSettings.Url"/>
+    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Url))]
+    public static T SetUrl<T>(this T o, string v) where T : GitHubSettings => o.Modify(b => b.Set(() => o.Url, v));
+    /// <inheritdoc cref="GitHubSettings.Url"/>
+    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Url))]
+    public static T ResetUrl<T>(this T o) where T : GitHubSettings => o.Modify(b => b.Remove(() => o.Url));
     #endregion
 }
 #endregion

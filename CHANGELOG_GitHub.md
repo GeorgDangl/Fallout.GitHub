@@ -2,6 +2,10 @@
 
 All notable changes to **Nuke.GitHub** are documented here.
 
+# v7.0.0:
+- Update NUKE to v9
+- The minimum required .NET version is now 8.0
+
 ## v6.0.0:
 - Update NUKE to v8
 

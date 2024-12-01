@@ -11,14 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nuke.Common" Version="8.1.2" />
+    <PackageReference Include="Nuke.Common" Version="9.0.1" />
     <PackageDownload Include="GitVersion.Tool" Version="[5.12.0]" />
     <PackageDownload Include="docfx" Version="[2.77.0]" />
-    <PackageReference Include="Nuke.Tooling.Generator" Version="8.1.2" />
+    <PackageReference Include="Nuke.Tooling.Generator" Version="9.0.1" />
     <!-- The references below are required to compiled the embedded files from
          the separate Nuke.GitHub and Nuke.WebDocu projects itself -->
     <PackageReference Include="Octokit" Version="13.0.1" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.22.2" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.23.0" />
   </ItemGroup>
 
   <ItemGroup>

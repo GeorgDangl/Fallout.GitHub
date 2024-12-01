@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
@@ -11,36 +12,50 @@ namespace Nuke.WebDocu
     {
         [Pure]
         public static WebDocuSettings SetSourceDirectory(this WebDocuSettings toolSettings, string sourceDirectory)
-            => toolSettings.CloneAndModify(s => s.SourceDirectory = sourceDirectory);
+        {
+            toolSettings.SourceDirectory = sourceDirectory;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetDocuApiKey(this WebDocuSettings toolSettings, string docuApiKey)
-            => toolSettings.CloneAndModify(s => s.DocuApiKey = docuApiKey);
+        {
+            toolSettings.DocuApiKey = docuApiKey;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetDocuBaseUrl(this WebDocuSettings toolSettings, string docuBaseUrl)
-            => toolSettings.CloneAndModify(s => s.DocuBaseUrl = docuBaseUrl);
+        {
+            toolSettings.DocuBaseUrl = docuBaseUrl;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetVersion(this WebDocuSettings toolSettings, string version)
-            => toolSettings.CloneAndModify(s => s.Version = version);
+        {
+            toolSettings.Version = version;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetMarkdownChangelog(this WebDocuSettings toolSettings, string markdownChangelog)
-            => toolSettings.CloneAndModify(s => s.MarkdownChangelog = markdownChangelog);
+        {
+            toolSettings.MarkdownChangelog = markdownChangelog;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetAssetFilePaths(this WebDocuSettings toolSettings, string[] assetFilePaths)
-            => toolSettings.CloneAndModify(s => s.AssetFilePaths = assetFilePaths);
+        {
+            toolSettings.AssetFilePaths = assetFilePaths;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetSkipForVersionConflicts(this WebDocuSettings toolSettings, bool skipForVersionConflicts)
-            => toolSettings.CloneAndModify(s => s.SkipForVersionConflicts = skipForVersionConflicts);
-
-        private static WebDocuSettings CloneAndModify(this WebDocuSettings toolSettings, Action<WebDocuSettings> modifyAction)
         {
-            toolSettings = toolSettings.NewInstance();
-            modifyAction(toolSettings);
+            toolSettings.SkipForVersionConflicts = skipForVersionConflicts;
             return toolSettings;
         }
     }
