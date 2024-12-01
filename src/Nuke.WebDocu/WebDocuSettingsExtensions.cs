@@ -12,30 +12,51 @@ namespace Nuke.WebDocu
     {
         [Pure]
         public static WebDocuSettings SetSourceDirectory(this WebDocuSettings toolSettings, string sourceDirectory)
-            => toolSettings.Modify(o => o.Set(() => toolSettings.SourceDirectory, sourceDirectory));
+        {
+            toolSettings.SourceDirectory = sourceDirectory;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetDocuApiKey(this WebDocuSettings toolSettings, string docuApiKey)
-            => toolSettings.Modify(o => o.Set(() => toolSettings.DocuApiKey, docuApiKey));
+        {
+            toolSettings.DocuApiKey = docuApiKey;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetDocuBaseUrl(this WebDocuSettings toolSettings, string docuBaseUrl)
-            => toolSettings.Modify(o => o.Set(() => toolSettings.DocuBaseUrl, docuBaseUrl));
+        {
+            toolSettings.DocuBaseUrl = docuBaseUrl;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetVersion(this WebDocuSettings toolSettings, string version)
-            => toolSettings.Modify(o => o.Set(() => toolSettings.Version, version));
+        {
+            toolSettings.Version = version;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetMarkdownChangelog(this WebDocuSettings toolSettings, string markdownChangelog)
-            => toolSettings.Modify(o => o.Set(() => toolSettings.MarkdownChangelog, markdownChangelog));
+        {
+            toolSettings.MarkdownChangelog = markdownChangelog;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetAssetFilePaths(this WebDocuSettings toolSettings, string[] assetFilePaths)
-            => toolSettings.Modify(o => o.Set(() => toolSettings.AssetFilePaths, assetFilePaths));
+        {
+            toolSettings.AssetFilePaths = assetFilePaths;
+            return toolSettings;
+        }
 
         [Pure]
         public static WebDocuSettings SetSkipForVersionConflicts(this WebDocuSettings toolSettings, bool skipForVersionConflicts)
-            => toolSettings.Modify(o => o.Set(() => toolSettings.SkipForVersionConflicts, skipForVersionConflicts));
+        {
+            toolSettings.SkipForVersionConflicts = skipForVersionConflicts;
+            return toolSettings;
+        }
     }
 }
