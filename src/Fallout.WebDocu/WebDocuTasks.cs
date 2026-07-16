@@ -1,8 +1,8 @@
 ﻿using Azure.Storage.Blobs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Nuke.Common.CI.Jenkins;
-using Nuke.Common.Tooling;
+using Fallout.Common.CI.Jenkins;
+using Fallout.Common.Tooling;
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -11,9 +11,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using static Nuke.Common.IO.Globbing;
+using static Fallout.Common.IO.Globbing;
 
-namespace Nuke.WebDocu
+namespace Fallout.WebDocu
 {
     public static class WebDocuTasks
     {

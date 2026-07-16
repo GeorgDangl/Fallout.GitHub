@@ -2,7 +2,7 @@ pipeline {
     agent {
         node {
             label 'master'
-            customWorkspace 'workspace/Nuke.GitHub'
+            customWorkspace 'workspace/Fallout.GitHub'
         }
     }
     environment {

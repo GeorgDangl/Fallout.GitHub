@@ -1,12 +1,9 @@
-﻿using JetBrains.Annotations;
-using Nuke.Common.Tooling;
+﻿using Fallout.Common.Tooling;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Nuke.WebDocu
+namespace Fallout.WebDocu
 {
-    [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public class WebDocuSettings : ToolOptions

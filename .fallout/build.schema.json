@@ -47,7 +47,7 @@
         "Quiet"
       ]
     },
-    "NukeBuild": {
+    "FalloutBuild": {
       "properties": {
         "Continue": {
           "type": "boolean",
@@ -149,12 +149,12 @@
         },
         "Solution": {
           "type": "string",
-          "description": "Path to a solution file that is automatically loaded. Default is Nuke.GitHub.sln"
+          "description": "Path to a solution file that is automatically loaded. Default is Fallout.GitHub.sln"
         }
       }
     },
     {
-      "$ref": "#/definitions/NukeBuild"
+      "$ref": "#/definitions/FalloutBuild"
     }
   ]
 }

@@ -1,6 +1,9 @@
 # Changelog
 
-All notable changes to **Nuke.GitHub** are documented here.
+All notable changes to **Fallout.GitHub** are documented here.
+
+## v8.0.0:
+- Migrate to Fallout
 
 # v7.0.0:
 - Update NUKE to v9
@@ -14,7 +17,7 @@ All notable changes to **Nuke.GitHub** are documented here.
 
 ## v5.0.0:
 - Update NUKE to v7
-- Version alignment with **Nuke.WebDocu**
+- Version alignment with **Fallout.WebDocu**
 
 ## v3.0.0:
 - Update NUKE to v6.0.1
@@ -68,7 +71,7 @@ All notable changes to **Nuke.GitHub** are documented here.
 
 ## v1.0.1
 - Refactor code to follow NUKE tooling recommendations
-- Provide `Nuke.GitHub.ChangeLogExtensions`. This will likely be merged with NUKE itself
+- Provide `Fallout.GitHub.ChangeLogExtensions`. This will likely be merged with NUKE itself
   or be distributed in a separate package in the future
 
 ## v1.0.0

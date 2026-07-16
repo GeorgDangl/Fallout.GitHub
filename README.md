@@ -1,20 +1,20 @@
-# Nuke.GitHub & Nuke WebDocu
+# Fallout.GitHub & Fallout.WebDocu
 
-[![Build Status](https://jenkins.dangl.me/buildStatus/icon?job=GeorgDangl%2FNuke.GitHub%2Fdevelop)](https://jenkins.dangl.me/job/GeorgDangl/job/Nuke.GitHub/job/develop/)
+[![Build Status](https://jenkins.dangl.me/buildStatus/icon?job=GeorgDangl%2FFallout.GitHub%2Fdevelop)](https://jenkins.dangl.me/job/GeorgDangl/job/Fallout.GitHub/job/develop/)
 
-**Nuke.GitHub**  
-![NuGet](https://img.shields.io/nuget/v/Nuke.GitHub.svg)
-[![MyGet](https://img.shields.io/myget/dangl/v/Nuke.GitHub.svg)]()  
-**Nuke.WebDocu**  
-![NuGet](https://img.shields.io/nuget/v/Nuke.WebDocu.svg)
-[![MyGet](https://img.shields.io/myget/dangl/v/Nuke.WebDocu.svg)]()
+**Fallout.GitHub**  
+![NuGet](https://img.shields.io/nuget/v/Fallout.GitHub.svg)
+[![MyGet](https://img.shields.io/myget/dangl/v/Fallout.GitHub.svg)]()  
+**Fallout.WebDocu**  
+![NuGet](https://img.shields.io/nuget/v/Fallout.WebDocu.svg)
+[![MyGet](https://img.shields.io/myget/dangl/v/Fallout.WebDocu.svg)]()
 
-> This repository contains both **Nuke.GitHub** and **Nuke.WebDocu**.
+> This repository contains both **Fallout.GitHub** and **Fallout.WebDocu**.
 
-# Nuke.GitHub
+# Fallout.GitHub
 
 This plugin provides some methods to work with GitHub repositories
-in [NUKE Build](https://github.com/nuke-build/nuke).
+in [Fallout](https://github.com/Fallout-build/Fallout).
 
 Currently supported:
   * **PublishRelease** to create GitHub releases.
@@ -22,7 +22,7 @@ Currently supported:
   * **GetReleases**
   * **GetRepository**
 
-[Link to documentation](https://docs.dangl-it.com/Projects/Nuke.GitHub).
+[Link to documentation](https://docs.dangl-it.com/Projects/Fallout.GitHub).
 
 [Changelog](./Changelog_WebDocu.md)
 
@@ -35,9 +35,9 @@ All builds are available on MyGet:
 
 ## Example
 
-    using static Nuke.GitHub.GitHubTasks;
-    using static Nuke.GitHub.ChangeLogExtensions;
-    using static Nuke.Common.ChangeLog.ChangelogTasks;
+    using static Fallout.GitHub.GitHubTasks;
+    using static Fallout.GitHub.ChangeLogExtensions;
+    using static Fallout.Common.ChangeLog.ChangelogTasks;
 
     Target PublishGitHubRelease => _ => _
         .DependsOn(Pack)
@@ -51,7 +51,7 @@ All builds are available on MyGet:
             // We also want to fill the changelog with the latest release notes,
             // so we're just reading from a markdown file containing the changelog.
             // Not providing the second, optional parameter gives the latest section
-            var changeLogSectionEntries = Nuke.Common.ChangeLog.ExtractChangelogSectionNotes(ChangeLogFile);
+            var changeLogSectionEntries = Fallout.Common.ChangeLog.ExtractChangelogSectionNotes(ChangeLogFile);
             var latestChangeLog = changeLogSectionEntries
                 .Aggregate((c, n) => c + Environment.NewLine + n);
             var completeChangeLog = $"## {releaseTag}" + Environment.NewLine + latestChangeLog;
@@ -71,12 +71,12 @@ All builds are available on MyGet:
             );
         });
 
-# Nuke.WebDocu
+# Fallout.WebDocu
 
 This plugin provides a task to upload documentation packages to [WebDocu sites](https://github.com/GeorgDangl/WebDocu).
-It's written for the [NUKE Build](https://github.com/nuke-build/nuke) system.
+It's written for the [Fallout](https://github.com/Fallout-build/Fallout) system.
 
-[Link to documentation](https://docs.dangl-it.com/Projects/Nuke.WebDocu).
+[Link to documentation](https://docs.dangl-it.com/Projects/Fallout.WebDocu).
 
 [Changelog](./Changelog_WebDocu.md)
 
@@ -105,7 +105,7 @@ Target UploadDocumentation => _ => _
             var packageVersion = GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
                 .Where(x => !x.EndsWith("symbols.nupkg"))
                 .Select(Path.GetFileName)
-                .Select(x => WebDocuTasks.GetVersionFromNuGetPackageFilename(x, "Nuke.WebDeploy"))
+                .Select(x => WebDocuTasks.GetVersionFromNuGetPackageFilename(x, "Fallout.WebDeploy"))
                 .First();
 
             return s.SetDocuBaseUrl(DocuBaseUrl)

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Nuke.Common.Git;
-using Nuke.Common;
-using Nuke.Common.Tooling;
+using Fallout.Common.Git;
+using Fallout.Common;
+using Fallout.Common.Tooling;
 using Octokit;
-using Nuke.Common.Tools.GitHub;
+using Fallout.Common.Tools.GitHub;
 
-namespace Nuke.GitHub
+namespace Fallout.GitHub
 {
     public static partial class GitHubTasks
     {
@@ -19,6 +19,16 @@ namespace Nuke.GitHub
             settings.Validate();
             var releaseTag = settings.Tag;
             var client = GetAuthenticatedClient(settings.Token, settings.Url);
+
+            try
+            {
+                var funky = await client.Authorization.GetAll();
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+            }
+
             var existingReleases = await client.Repository.Release.GetAll(settings.RepositoryOwner, settings.RepositoryName);
 
             if (existingReleases.Any(r => r.TagName == releaseTag))
@@ -122,7 +132,8 @@ namespace Nuke.GitHub
             {
              return new GitHubClient(new ProductHeaderValue("dangl-bot"))
               {
-                Credentials = new Credentials(token)
+                Credentials = new Credentials("funky")
+                //Credentials = new Credentials(token)
               };
             }
             else

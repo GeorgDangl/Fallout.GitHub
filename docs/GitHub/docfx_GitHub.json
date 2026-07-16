@@ -3,7 +3,7 @@
     {
       "src": [
         {
-          "src": "../../src/Nuke.GitHub",
+          "src": "../../src/Fallout.GitHub",
           "files": [
             "*.csproj"
           ],
@@ -38,7 +38,7 @@
     ],
     "overwrite": "specs/*.md",
     "globalMetadata": {
-      "_appTitle": "Nuke.GitHub Documentation",
+      "_appTitle": "Fallout.GitHub Documentation",
       "_appFooter": "&copy; <a href=\"https://www.dangl-it.com\" target=\"_blank\">Dangl IT GmbH</a>",
       "_appLogoPath": "app-logo.png",
       "_appFaviconPath": "app-logo.png",
