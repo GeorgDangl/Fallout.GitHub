@@ -10,7 +10,6 @@
     <PackageProjectUrl>https://github.com/GeorgDangl/Fallout.GitHub</PackageProjectUrl>
     <RepositoryUrl>https://github.com/GeorgDangl/Fallout.GitHub.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageId>Fallout.WebDocu</PackageId>
     <PackageIconUrl>https://raw.githubusercontent.com/Fallout-build/Fallout/refs/heads/main/.assets/fallout-logo.png</PackageIconUrl>
   </PropertyGroup>
 
