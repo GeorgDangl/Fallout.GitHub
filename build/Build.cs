@@ -46,8 +46,8 @@ class Build : FalloutBuild
     [AzureKeyVaultSecret] string GitHubAuthenticationToken;
     [AzureKeyVaultSecret] string DanglPublicFeedSource;
     [AzureKeyVaultSecret] string FeedzAccessToken;
-    [AzureKeyVaultSecret("NukeGitHub-DocuApiKey")] string NukeGitHubDocuApiKey;
-    [AzureKeyVaultSecret("NukeWebDocu-DocuApiKey")] string NukeWebDocuDocuApiKey;
+    [AzureKeyVaultSecret("FalloutGitHub-DocuApiKey")] string FalloutGitHubDocuApiKey;
+    [AzureKeyVaultSecret("FalloutWebDocu-DocuApiKey")] string FalloutWebDocuDocuApiKey;
     [AzureKeyVaultSecret] string NuGetApiKey;
     [AzureKeyVaultSecret] readonly string DanglCiCdTeamsWebhookUrl;
 
@@ -268,21 +268,21 @@ class Build : FalloutBuild
                 Assert.Fail(nameof(DocuBaseUrl) + " is required");
             }
 
-            if (string.IsNullOrWhiteSpace(NukeGitHubDocuApiKey))
+            if (string.IsNullOrWhiteSpace(FalloutGitHubDocuApiKey))
             {
-                Assert.Fail(nameof(NukeGitHubDocuApiKey) + " is required");
+                Assert.Fail(nameof(FalloutGitHubDocuApiKey) + " is required");
             }
 
-            if (string.IsNullOrWhiteSpace(NukeWebDocuDocuApiKey))
+            if (string.IsNullOrWhiteSpace(FalloutWebDocuDocuApiKey))
             {
-                Assert.Fail(nameof(NukeWebDocuDocuApiKey) + " is required");
+                Assert.Fail(nameof(FalloutWebDocuDocuApiKey) + " is required");
             }
 
             WebDocu(s => s
                 .SetSkipForVersionConflicts(true)
                 .SetMarkdownChangelog(File.ReadAllText(FalloutGitHubChangeLogFile))
                 .SetDocuBaseUrl(DocuBaseUrl)
-                .SetDocuApiKey(NukeGitHubDocuApiKey)
+                .SetDocuApiKey(FalloutGitHubDocuApiKey)
                 .SetSourceDirectory(OutputDirectory / "docs_github")
                 .SetVersion(GitVersion.NuGetVersion));
 
@@ -290,7 +290,7 @@ class Build : FalloutBuild
                 .SetSkipForVersionConflicts(true)
                 .SetMarkdownChangelog(File.ReadAllText(FalloutWebDocuChangeLogFile))
                 .SetDocuBaseUrl(DocuBaseUrl)
-                .SetDocuApiKey(NukeWebDocuDocuApiKey)
+                .SetDocuApiKey(FalloutWebDocuDocuApiKey)
                 .SetSourceDirectory(OutputDirectory / "docs_webdocu")
                 .SetVersion(GitVersion.NuGetVersion));
         });
