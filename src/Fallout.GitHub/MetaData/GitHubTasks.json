@@ -1,7 +1,7 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "$schema": "https://raw.githubusercontent.com/Fallout-build/Fallout/refs/heads/main/src/Fallout.Tooling.Generator/schema.json",
   "name": "GitHub",
-  "officialUrl": "https://github.com/GeorgDangl/Nuke.GitHub",
+  "officialUrl": "https://github.com/GeorgDangl/Fallout.GitHub",
   "help": "This class provides different tasks to work with GitHub repositories.",
   "dataClasses": [
     {
@@ -100,7 +100,7 @@
     "licence": [
       "Copyright Georg Dangl 2019.",
       "Distributed under the MIT License.",
-      "https://github.com/GeorgDangl/Nuke.GitHub/blob/dev/LICENSE.md"
+      "https://github.com/GeorgDangl/Fallout.GitHub/blob/dev/LICENSE.md"
     ]
   }
 }

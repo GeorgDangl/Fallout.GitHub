@@ -1,7 +1,7 @@
-﻿using Nuke.Common.Tooling;
+﻿using Fallout.Common.Tooling;
 using Xunit;
 
-namespace Nuke.WebDocu.Tests
+namespace Fallout.WebDocu.Tests
 {
     public class WebDocuTasksTests
     {

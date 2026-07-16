@@ -1,7 +1,6 @@
 ﻿using System;
-using Nuke.Common.Tooling;
 
-namespace Nuke.GitHub
+namespace Fallout.GitHub
 {
     public partial class GitHubSettings
     {

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".build", "build\.build.csproj", "{C57DD98E-6C51-4277-BC58-4CE05F718788}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.GitHub", "src\Nuke.GitHub\Nuke.GitHub.csproj", "{CE8839DE-7523-43F6-A8AF-AE3CFE299A6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fallout.GitHub", "src\Fallout.GitHub\Fallout.GitHub.csproj", "{CE8839DE-7523-43F6-A8AF-AE3CFE299A6B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E9941FBC-483C-4C6E-8902-2150571932F6}"
 EndProject
@@ -23,9 +23,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FB1D333C-5E50-4A06-85F5-5AF080BA7DA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.WebDocu", "src\Nuke.WebDocu\Nuke.WebDocu.csproj", "{373D55BC-B66E-41DF-AF42-95614E541CA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fallout.WebDocu", "src\Fallout.WebDocu\Fallout.WebDocu.csproj", "{373D55BC-B66E-41DF-AF42-95614E541CA0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.WebDocu.Tests", "test\Nuke.WebDocu.Tests\Nuke.WebDocu.Tests.csproj", "{2899133E-B837-469E-8E2B-361E27E2E639}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fallout.WebDocu.Tests", "test\Fallout.WebDocu.Tests\Fallout.WebDocu.Tests.csproj", "{2899133E-B837-469E-8E2B-361E27E2E639}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

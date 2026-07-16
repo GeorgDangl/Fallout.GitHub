@@ -1,10 +1,10 @@
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
-using Nuke.Common;
-using Nuke.Common.Tooling;
-using Nuke.Common.Tools;
-using Nuke.Common.Utilities.Collections;
+using Fallout.Common;
+using Fallout.Common.Tooling;
+using Fallout.Common.Tools;
+using Fallout.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,11 +14,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Nuke.GitHub;
+namespace Fallout.GitHub;
 
 #region GitHubReleaseSettings
 /// <summary>Used within <see cref="GitHubTasks"/>.</summary>
-[PublicAPI]
+
 [ExcludeFromCodeCoverage]
 public partial class GitHubReleaseSettings : GitHubSettings
 {
@@ -38,7 +38,7 @@ public partial class GitHubReleaseSettings : GitHubSettings
 #endregion
 #region GitHubPullRequestSettings
 /// <summary>Used within <see cref="GitHubTasks"/>.</summary>
-[PublicAPI]
+
 [ExcludeFromCodeCoverage]
 public partial class GitHubPullRequestSettings : GitHubSettings
 {
@@ -54,7 +54,7 @@ public partial class GitHubPullRequestSettings : GitHubSettings
 #endregion
 #region GitHubSettings
 /// <summary>Used within <see cref="GitHubTasks"/>.</summary>
-[PublicAPI]
+
 [ExcludeFromCodeCoverage]
 public partial class GitHubSettings : ToolOptions
 {
@@ -70,145 +70,145 @@ public partial class GitHubSettings : ToolOptions
 #endregion
 #region GitHubReleaseSettingsExtensions
 /// <summary>Used within <see cref="GitHubTasks"/>.</summary>
-[PublicAPI]
+
 [ExcludeFromCodeCoverage]
 public static partial class GitHubReleaseSettingsExtensions
 {
     #region ArtifactPaths
     /// <inheritdoc cref="GitHubReleaseSettings.ArtifactPaths"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ArtifactPaths))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ArtifactPaths))]
     public static T SetArtifactPaths<T>(this T o, string[] v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.ArtifactPaths, v));
     /// <inheritdoc cref="GitHubReleaseSettings.ArtifactPaths"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ArtifactPaths))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ArtifactPaths))]
     public static T ResetArtifactPaths<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.ArtifactPaths));
     #endregion
     #region ReleaseNotes
     /// <inheritdoc cref="GitHubReleaseSettings.ReleaseNotes"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ReleaseNotes))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ReleaseNotes))]
     public static T SetReleaseNotes<T>(this T o, string v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.ReleaseNotes, v));
     /// <inheritdoc cref="GitHubReleaseSettings.ReleaseNotes"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ReleaseNotes))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.ReleaseNotes))]
     public static T ResetReleaseNotes<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.ReleaseNotes));
     #endregion
     #region Tag
     /// <inheritdoc cref="GitHubReleaseSettings.Tag"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Tag))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Tag))]
     public static T SetTag<T>(this T o, string v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Tag, v));
     /// <inheritdoc cref="GitHubReleaseSettings.Tag"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Tag))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Tag))]
     public static T ResetTag<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.Tag));
     #endregion
     #region Name
     /// <inheritdoc cref="GitHubReleaseSettings.Name"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Name))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Name))]
     public static T SetName<T>(this T o, string v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Name, v));
     /// <inheritdoc cref="GitHubReleaseSettings.Name"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Name))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Name))]
     public static T ResetName<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.Name));
     #endregion
     #region CommitSha
     /// <inheritdoc cref="GitHubReleaseSettings.CommitSha"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.CommitSha))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.CommitSha))]
     public static T SetCommitSha<T>(this T o, string v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.CommitSha, v));
     /// <inheritdoc cref="GitHubReleaseSettings.CommitSha"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.CommitSha))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.CommitSha))]
     public static T ResetCommitSha<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.CommitSha));
     #endregion
     #region Prerelease
     /// <inheritdoc cref="GitHubReleaseSettings.Prerelease"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
     public static T SetPrerelease<T>(this T o, bool? v) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Prerelease, v));
     /// <inheritdoc cref="GitHubReleaseSettings.Prerelease"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
     public static T ResetPrerelease<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Remove(() => o.Prerelease));
     /// <inheritdoc cref="GitHubReleaseSettings.Prerelease"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
     public static T EnablePrerelease<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Prerelease, true));
     /// <inheritdoc cref="GitHubReleaseSettings.Prerelease"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
     public static T DisablePrerelease<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Prerelease, false));
     /// <inheritdoc cref="GitHubReleaseSettings.Prerelease"/>
-    [Pure] [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
+     [Builder(Type = typeof(GitHubReleaseSettings), Property = nameof(GitHubReleaseSettings.Prerelease))]
     public static T TogglePrerelease<T>(this T o) where T : GitHubReleaseSettings => o.Modify(b => b.Set(() => o.Prerelease, !o.Prerelease));
     #endregion
 }
 #endregion
 #region GitHubPullRequestSettingsExtensions
 /// <summary>Used within <see cref="GitHubTasks"/>.</summary>
-[PublicAPI]
+
 [ExcludeFromCodeCoverage]
 public static partial class GitHubPullRequestSettingsExtensions
 {
     #region Base
     /// <inheritdoc cref="GitHubPullRequestSettings.Base"/>
-    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Base))]
+     [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Base))]
     public static T SetBase<T>(this T o, string v) where T : GitHubPullRequestSettings => o.Modify(b => b.Set(() => o.Base, v));
     /// <inheritdoc cref="GitHubPullRequestSettings.Base"/>
-    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Base))]
+     [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Base))]
     public static T ResetBase<T>(this T o) where T : GitHubPullRequestSettings => o.Modify(b => b.Remove(() => o.Base));
     #endregion
     #region Head
     /// <inheritdoc cref="GitHubPullRequestSettings.Head"/>
-    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Head))]
+     [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Head))]
     public static T SetHead<T>(this T o, string v) where T : GitHubPullRequestSettings => o.Modify(b => b.Set(() => o.Head, v));
     /// <inheritdoc cref="GitHubPullRequestSettings.Head"/>
-    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Head))]
+     [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Head))]
     public static T ResetHead<T>(this T o) where T : GitHubPullRequestSettings => o.Modify(b => b.Remove(() => o.Head));
     #endregion
     #region Title
     /// <inheritdoc cref="GitHubPullRequestSettings.Title"/>
-    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Title))]
+     [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Title))]
     public static T SetTitle<T>(this T o, string v) where T : GitHubPullRequestSettings => o.Modify(b => b.Set(() => o.Title, v));
     /// <inheritdoc cref="GitHubPullRequestSettings.Title"/>
-    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Title))]
+     [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Title))]
     public static T ResetTitle<T>(this T o) where T : GitHubPullRequestSettings => o.Modify(b => b.Remove(() => o.Title));
     #endregion
     #region Body
     /// <inheritdoc cref="GitHubPullRequestSettings.Body"/>
-    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Body))]
+     [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Body))]
     public static T SetBody<T>(this T o, string v) where T : GitHubPullRequestSettings => o.Modify(b => b.Set(() => o.Body, v));
     /// <inheritdoc cref="GitHubPullRequestSettings.Body"/>
-    [Pure] [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Body))]
+     [Builder(Type = typeof(GitHubPullRequestSettings), Property = nameof(GitHubPullRequestSettings.Body))]
     public static T ResetBody<T>(this T o) where T : GitHubPullRequestSettings => o.Modify(b => b.Remove(() => o.Body));
     #endregion
 }
 #endregion
 #region GitHubSettingsExtensions
 /// <summary>Used within <see cref="GitHubTasks"/>.</summary>
-[PublicAPI]
+
 [ExcludeFromCodeCoverage]
 public static partial class GitHubSettingsExtensions
 {
     #region RepositoryOwner
     /// <inheritdoc cref="GitHubSettings.RepositoryOwner"/>
-    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryOwner))]
+     [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryOwner))]
     public static T SetRepositoryOwner<T>(this T o, string v) where T : GitHubSettings => o.Modify(b => b.Set(() => o.RepositoryOwner, v));
     /// <inheritdoc cref="GitHubSettings.RepositoryOwner"/>
-    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryOwner))]
+     [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryOwner))]
     public static T ResetRepositoryOwner<T>(this T o) where T : GitHubSettings => o.Modify(b => b.Remove(() => o.RepositoryOwner));
     #endregion
     #region RepositoryName
     /// <inheritdoc cref="GitHubSettings.RepositoryName"/>
-    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryName))]
+     [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryName))]
     public static T SetRepositoryName<T>(this T o, string v) where T : GitHubSettings => o.Modify(b => b.Set(() => o.RepositoryName, v));
     /// <inheritdoc cref="GitHubSettings.RepositoryName"/>
-    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryName))]
+     [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.RepositoryName))]
     public static T ResetRepositoryName<T>(this T o) where T : GitHubSettings => o.Modify(b => b.Remove(() => o.RepositoryName));
     #endregion
     #region Token
     /// <inheritdoc cref="GitHubSettings.Token"/>
-    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Token))]
+     [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Token))]
     public static T SetToken<T>(this T o, string v) where T : GitHubSettings => o.Modify(b => b.Set(() => o.Token, v));
     /// <inheritdoc cref="GitHubSettings.Token"/>
-    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Token))]
+     [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Token))]
     public static T ResetToken<T>(this T o) where T : GitHubSettings => o.Modify(b => b.Remove(() => o.Token));
     #endregion
     #region Url
     /// <inheritdoc cref="GitHubSettings.Url"/>
-    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Url))]
+     [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Url))]
     public static T SetUrl<T>(this T o, string v) where T : GitHubSettings => o.Modify(b => b.Set(() => o.Url, v));
     /// <inheritdoc cref="GitHubSettings.Url"/>
-    [Pure] [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Url))]
+     [Builder(Type = typeof(GitHubSettings), Property = nameof(GitHubSettings.Url))]
     public static T ResetUrl<T>(this T o) where T : GitHubSettings => o.Modify(b => b.Remove(() => o.Url));
     #endregion
 }

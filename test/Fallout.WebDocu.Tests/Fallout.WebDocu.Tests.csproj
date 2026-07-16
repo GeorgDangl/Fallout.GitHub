@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Nuke.WebDocu\Nuke.WebDocu.csproj" />
+    <ProjectReference Include="..\..\src\Fallout.WebDocu\Fallout.WebDocu.csproj" />
   </ItemGroup>
 
 </Project>

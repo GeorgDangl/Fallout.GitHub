@@ -1,48 +1,48 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <RootNamespace></RootNamespace>
     <IsPackable>False</IsPackable>
     <NoWarn>CS0649;CS0169</NoWarn>
-    <NukeTelemetryVersion>1</NukeTelemetryVersion>
+    <FalloutTelemetryVersion>1</FalloutTelemetryVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nuke.Common" Version="9.0.1" />
+    <PackageReference Include="Fallout.Common" Version="10.3.49" />
     <PackageDownload Include="GitVersion.Tool" Version="[5.12.0]" />
-    <PackageDownload Include="docfx" Version="[2.77.0]" />
-    <PackageReference Include="Nuke.Tooling.Generator" Version="9.0.1" />
+    <PackageDownload Include="docfx" Version="[2.78.5]" />
+    <PackageReference Include="Fallout.Tooling.Generator" Version="10.3.49" />
     <!-- The references below are required to compiled the embedded files from
-         the separate Nuke.GitHub and Nuke.WebDocu projects itself -->
-    <PackageReference Include="Octokit" Version="13.0.1" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.23.0" />
+         the separate Fallout.GitHub and Fallout.WebDocu projects itself -->
+    <PackageReference Include="Octokit" Version="14.0.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.29.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- By linking the files here, we're not having any trouble with locked dlls
-         during the build process -->
-    <Compile Include="..\src\Nuke.GitHub\**\*.cs">
-      <Link>NukeGitHub\%(RecursiveDir)%(Filename)%(Extension)</Link>
-    </Compile>
-    <Compile Remove="..\src\Nuke.GitHub\obj\**" />
-    <Compile Remove="..\src\Nuke.GitHub\bin\**" />
+    <FalloutMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- By linking the files here, we're not having any trouble with locked dlls
          during the build process -->
-    <Compile Include="..\src\Nuke.WebDocu\**\*.cs">
-      <Link>NukeWebDocu\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    <Compile Include="..\src\Fallout.GitHub\**\*.cs">
+      <Link>FalloutGitHub\%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Compile>
-    <Compile Remove="..\src\Nuke.WebDocu\obj\**" />
-    <Compile Remove="..\src\Nuke.WebDocu\bin\**" />
+    <Compile Remove="..\src\Fallout.GitHub\obj\**" />
+    <Compile Remove="..\src\Fallout.GitHub\bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- By linking the files here, we're not having any trouble with locked dlls
+         during the build process -->
+    <Compile Include="..\src\Fallout.WebDocu\**\*.cs">
+      <Link>FalloutWebDocu\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Compile>
+    <Compile Remove="..\src\Fallout.WebDocu\obj\**" />
+    <Compile Remove="..\src\Fallout.WebDocu\bin\**" />
   </ItemGroup>
 
 </Project>
