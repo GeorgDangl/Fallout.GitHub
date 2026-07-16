@@ -111,7 +111,7 @@ namespace Fallout.GitHub
             {
                 const int maxPageSize = 100;
                 apiOptions.PageSize = Math.Min(numberOfReleases.Value, maxPageSize);
-                apiOptions.PageCount = (int) Math.Ceiling((double) numberOfReleases.Value / 100);
+                apiOptions.PageCount = (int)Math.Ceiling((double)numberOfReleases.Value / 100);
             }
 
             var client = GetAuthenticatedClient(settings.Token, settings.Url);
@@ -126,23 +126,22 @@ namespace Fallout.GitHub
             return await client.Repository.Get(settings.RepositoryOwner, settings.RepositoryName);
         }
 
-        static GitHubClient GetAuthenticatedClient(string token, string url)
+        private static GitHubClient GetAuthenticatedClient(string token, string url)
         {
-            if (String.IsNullOrEmpty(url))
+            if (string.IsNullOrEmpty(url))
             {
-             return new GitHubClient(new ProductHeaderValue("dangl-bot"))
-              {
-                Credentials = new Credentials("funky")
-                //Credentials = new Credentials(token)
-              };
+                return new GitHubClient(new ProductHeaderValue("dangl-bot"))
+                {
+                    Credentials = new Credentials(token)
+                };
             }
             else
             {
-              return new GitHubClient(new ProductHeaderValue("dangl-bot"), new Uri(url))
-              {
-                Credentials = new Credentials(token)
-              };
-            }           
+                return new GitHubClient(new ProductHeaderValue("dangl-bot"), new Uri(url))
+                {
+                    Credentials = new Credentials(token)
+                };
+            }
         }
 
         public static (string gitHubOwner, string repositoryName) GetGitHubRepositoryInfo(GitRepository gitRepository)
@@ -151,11 +150,11 @@ namespace Fallout.GitHub
             var split = gitRepository.Identifier.Split('/');
             return (split[0], split[1]);
         }
-        
+
         public static (string gitHubOwner, string repositoryName) GetGitHubEnterpriseRepositoryInfo(GitRepository gitRepository)
         {
-          var split = gitRepository.Identifier.Split('/');
-          return (split[0], split[1]);
+            var split = gitRepository.Identifier.Split('/');
+            return (split[0], split[1]);
         }
-  }
+    }
 }
