@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Fallout.Common" Version="10.3.49" />
     <PackageDownload Include="GitVersion.Tool" Version="[5.12.0]" />
-    <PackageDownload Include="docfx" Version="[2.77.0]" />
+    <PackageDownload Include="docfx" Version="[2.78.5]" />
     <PackageReference Include="Fallout.Tooling.Generator" Version="10.3.49" />
     <!-- The references below are required to compiled the embedded files from
          the separate Fallout.GitHub and Fallout.WebDocu projects itself -->

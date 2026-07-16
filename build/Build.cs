@@ -126,7 +126,7 @@ class Build : FalloutBuild
                 .SetNoBuild(true)
                 .SetProjectFile(RootDirectory / "test" / "Fallout.WebDocu.Tests")
                 .SetTestAdapterPath(".")
-                .CombineWith(c => new[] { "net8.0" }
+                .CombineWith(c => new[] { "net10.0" }
                     .Select(framework => c.SetFramework(framework).SetLoggers($"xunit;LogFilePath={OutputDirectory / $"tests-{framework}.xml"}"))
                 ), degreeOfParallelism: Environment.ProcessorCount, completeOnFailure: true);
         });
@@ -212,7 +212,7 @@ class Build : FalloutBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            var docFxPath = NuGetToolPathResolver.GetPackageExecutable("docfx", "tools/net8.0/any/docfx.dll");
+            var docFxPath = NuGetToolPathResolver.GetPackageExecutable("docfx", "tools/net10.0/any/docfx.dll");
             DotNet($"{docFxPath} metadata {FalloutGitHubDocFxFile}");
             DotNet($"{docFxPath} metadata {FalloutWebDocuDocFxFile}");
         });
@@ -245,7 +245,7 @@ class Build : FalloutBuild
                 File.Copy(FalloutGitHubChangeLogFile, docsPath / "CHANGELOG_GitHub.md", overwrite: true);
                 File.Copy(FalloutWebDocuChangeLogFile, docsPath / "CHANGELOG_WebDocu.md", overwrite: true);
 
-                var docFxPath = NuGetToolPathResolver.GetPackageExecutable("docfx", "tools/net8.0/any/docfx.dll");
+                var docFxPath = NuGetToolPathResolver.GetPackageExecutable("docfx", "tools/net10.0/any/docfx.dll");
                 DotNet($"{docFxPath} {config}");
 
                 File.Delete(docsPath / "LICENSE.md");

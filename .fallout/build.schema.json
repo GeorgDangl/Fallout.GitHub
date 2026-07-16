@@ -120,6 +120,12 @@
         "DocuBaseUrl": {
           "type": "string"
         },
+        "FalloutGitHubDocuApiKey": {
+          "type": "string"
+        },
+        "FalloutWebDocuDocuApiKey": {
+          "type": "string"
+        },
         "FeedzAccessToken": {
           "type": "string"
         },
@@ -139,12 +145,6 @@
           "type": "string"
         },
         "NuGetApiKey": {
-          "type": "string"
-        },
-        "NukeGitHubDocuApiKey": {
-          "type": "string"
-        },
-        "NukeWebDocuDocuApiKey": {
           "type": "string"
         },
         "Solution": {
