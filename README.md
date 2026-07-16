@@ -2,10 +2,10 @@
 
 [![Build Status](https://jenkins.dangl.me/buildStatus/icon?job=GeorgDangl%2FFallout.GitHub%2Fdevelop)](https://jenkins.dangl.me/job/GeorgDangl/job/Fallout.GitHub/job/develop/)
 
-**Fallout.GitHub**  
+**Dangl.Fallout.GitHub**  
 ![NuGet](https://img.shields.io/nuget/v/Dangl.Fallout.GitHub.svg)
 [![MyGet](https://img.shields.io/myget/dangl/v/Dangl.Fallout.GitHub.svg)]()  
-**Fallout.WebDocu**  
+**Dangl.Fallout.WebDocu**  
 ![NuGet](https://img.shields.io/nuget/v/Dangl.Fallout.WebDocu.svg)
 [![MyGet](https://img.shields.io/myget/dangl/v/Dangl.Fallout.WebDocu.svg)]()
 
