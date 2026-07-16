@@ -20,15 +20,6 @@ namespace Fallout.GitHub
             var releaseTag = settings.Tag;
             var client = GetAuthenticatedClient(settings.Token, settings.Url);
 
-            try
-            {
-                var funky = await client.Authorization.GetAll();
-            }
-            catch (Exception e)
-            {
-                e.ToString();
-            }
-
             var existingReleases = await client.Repository.Release.GetAll(settings.RepositoryOwner, settings.RepositoryName);
 
             if (existingReleases.Any(r => r.TagName == releaseTag))
