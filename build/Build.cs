@@ -246,6 +246,7 @@ class Build : FalloutBuild
 
                 var docFxPath = NuGetToolPathResolver.GetPackageExecutable("docfx", "tools/net10.0/any/docfx.dll");
                 DotNet($"{docFxPath} {config}");
+                MarkdownDocumentation.Create(config, OutputDirectory / (config == FalloutGitHubDocFxFile ? "docs-markdown-github" : "docs-markdown-webdocu"));
 
                 File.Delete(docsPath / "LICENSE.md");
                 File.Delete(docsPath / "index.md");
@@ -282,6 +283,7 @@ class Build : FalloutBuild
                 .SetMarkdownChangelog(File.ReadAllText(FalloutGitHubChangeLogFile))
                 .SetDocuBaseUrl(DocuBaseUrl)
                 .SetDocuApiKey(FalloutGitHubDocuApiKey)
+                .SetMarkdownPackagePath(OutputDirectory / "docs-markdown-github.zip")
                 .SetSourceDirectory(OutputDirectory / "docs_github")
                 .SetVersion(GitVersion.NuGetVersion));
 
@@ -290,6 +292,7 @@ class Build : FalloutBuild
                 .SetMarkdownChangelog(File.ReadAllText(FalloutWebDocuChangeLogFile))
                 .SetDocuBaseUrl(DocuBaseUrl)
                 .SetDocuApiKey(FalloutWebDocuDocuApiKey)
+                .SetMarkdownPackagePath(OutputDirectory / "docs-markdown-webdocu.zip")
                 .SetSourceDirectory(OutputDirectory / "docs_webdocu")
                 .SetVersion(GitVersion.NuGetVersion));
         });
