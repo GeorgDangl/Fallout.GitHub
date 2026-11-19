@@ -2,6 +2,9 @@
 
 All notable changes to **Fallout.WebDocu** are documented here.
 
+## v8.0.2:
+- **Fallout.WebDocu** now also produces Markdown documentation. This can be easily accessed by AI agents via the MCP server implementation in **Dangl**Docu.
+
 ## v8.0.1:
 - Updated Fallout to the latest version
 - Add optional Markdown ZIP uploads via `SetMarkdownPackagePath` and standalone uploads via `MarkdownPackageUpload`
