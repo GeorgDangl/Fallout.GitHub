@@ -14,6 +14,17 @@ namespace Fallout.WebDocu.Tests
     public class MarkdownPackageUploadTests
     {
         [Fact]
+        public async Task ServerCanShutDownWithPendingRequest()
+        {
+            for (var iteration = 0; iteration < 50; iteration++)
+            {
+                using var server = new UploadServer();
+                await server.WaitUntilAcceptingRequests();
+                Assert.Empty(server.Requests);
+            }
+        }
+
+        [Fact]
         public void UploadsMarkdownAfterHtmlAndBeforeAssets()
         {
             using var server = new UploadServer();
@@ -214,9 +225,11 @@ namespace Fallout.WebDocu.Tests
         sealed class UploadServer : IDisposable
         {
             readonly HttpListener _listener = new HttpListener();
+            readonly TaskCompletionSource _acceptStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
             readonly Task _requestsTask;
             readonly HttpStatusCode _htmlStatus;
             readonly HttpStatusCode _markdownStatus;
+            volatile bool _stopping;
             public string BaseUrl { get; }
             public ConcurrentQueue<UploadRequest> Requests { get; } = new ConcurrentQueue<UploadRequest>();
 
@@ -236,37 +249,47 @@ namespace Fallout.WebDocu.Tests
 
             async Task HandleRequests()
             {
-                try
+                while (!_stopping)
                 {
-                    while (_listener.IsListening)
+                    HttpListenerContext context;
+                    try
                     {
-                        var context = await _listener.GetContextAsync();
-                        using var body = new MemoryStream();
-                        await context.Request.InputStream.CopyToAsync(body);
-                        var path = context.Request.Url.AbsolutePath;
-                        Requests.Enqueue(new UploadRequest(path, context.Request.HttpMethod, context.Request.ContentType,
-                            Encoding.Latin1.GetString(body.ToArray())));
-                        var status = path == "/API/Projects/Upload" ? _htmlStatus
-                            : path == "/API/MarkdownDocuments/Upload" ? _markdownStatus
-                            : path == "/API/ProjectAssets/SASUpload" ? HttpStatusCode.NotFound
-                            : HttpStatusCode.OK;
-                        context.Response.StatusCode = (int)status;
-                        var response = Encoding.UTF8.GetBytes((int)status >= 400 ? "upload rejected" : "{}");
-                        context.Response.ContentLength64 = response.Length;
-                        await context.Response.OutputStream.WriteAsync(response);
-                        context.Response.Close();
+                        var pendingContext = _listener.GetContextAsync();
+                        _acceptStarted.TrySetResult();
+                        context = await pendingContext;
                     }
-                }
-                catch (HttpListenerException) when (!_listener.IsListening)
-                {
-                }
-                catch (ObjectDisposedException) when (!_listener.IsListening)
-                {
+                    catch (HttpListenerException) when (_stopping)
+                    {
+                        break;
+                    }
+                    catch (ObjectDisposedException) when (_stopping)
+                    {
+                        break;
+                    }
+
+                    using var body = new MemoryStream();
+                    await context.Request.InputStream.CopyToAsync(body);
+                    var path = context.Request.Url.AbsolutePath;
+                    Requests.Enqueue(new UploadRequest(path, context.Request.HttpMethod, context.Request.ContentType,
+                        Encoding.Latin1.GetString(body.ToArray())));
+                    var status = path == "/API/Projects/Upload" ? _htmlStatus
+                        : path == "/API/MarkdownDocuments/Upload" ? _markdownStatus
+                        : path == "/API/ProjectAssets/SASUpload" ? HttpStatusCode.NotFound
+                        : HttpStatusCode.OK;
+                    context.Response.StatusCode = (int)status;
+                    var response = Encoding.UTF8.GetBytes((int)status >= 400 ? "upload rejected" : "{}");
+                    context.Response.ContentLength64 = response.Length;
+                    await context.Response.OutputStream.WriteAsync(response);
+                    context.Response.Close();
                 }
             }
 
+            public Task WaitUntilAcceptingRequests() => _acceptStarted.Task.WaitAsync(TimeSpan.FromSeconds(10));
+
             public void Dispose()
             {
+                // Close can abort a pending accept before IsListening becomes false on Windows.
+                _stopping = true;
                 _listener.Close();
                 _requestsTask.WaitAsync(TimeSpan.FromSeconds(10)).GetAwaiter().GetResult();
             }
