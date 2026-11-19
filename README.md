@@ -179,3 +179,7 @@ at most 300 characters long, and contain no absolute paths or `.` / `..` segment
 ## License
 
 [This project is available under the MIT license.](LICENSE.md)
+
+### Markdown documentation
+
+`BuildDocumentation` also creates Markdown documentation in `output/docs-markdown-github`, `output/docs-markdown-webdocu`, with an adjacent ZIP archive. Each bundle starts at `index.md` and contains the same articles and resources selected for the corresponding HTML site, plus Markdown API reference files where applicable. The existing documentation upload publishes the Markdown archive to DanglDocu for the same version, making it available to AI agents through the DanglDocu MCP server.
