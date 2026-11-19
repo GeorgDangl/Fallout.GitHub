@@ -2,6 +2,9 @@
 
 All notable changes to **Fallout.GitHub** are documented here.
 
+## v8.0.1:
+- Updated Fallout to the latest version
+
 ## v8.0.0:
 - Migrate to Fallout
 

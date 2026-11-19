@@ -21,19 +21,57 @@ namespace Fallout.WebDocu
         {
             var settings = configurator.InvokeSafe(new WebDocuSettings());
 
+            if (!string.IsNullOrWhiteSpace(settings.MarkdownPackagePath))
+            {
+                ValidateMarkdownPackageSettings(settings);
+            }
+
             // Create zip package
             var tempPath = Path.GetTempFileName();
-            File.Delete(tempPath);
-            FixGitUrlsIfInJenkinsJob(settings.SourceDirectory);
-            ZipFile.CreateFromDirectory(settings.SourceDirectory, tempPath);
+            try
+            {
+                File.Delete(tempPath);
+                FixGitUrlsIfInJenkinsJob(settings.SourceDirectory);
+                ZipFile.CreateFromDirectory(settings.SourceDirectory, tempPath);
 
-            // Upload package to docs
-            UploadToDanglDocu(tempPath, settings)
+                // Upload package to docs
+                UploadToDanglDocu(tempPath, settings)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            finally
+            {
+                File.Delete(tempPath);
+            }
+        }
+
+        public static void MarkdownPackageUpload(Configure<WebDocuSettings> configurator)
+        {
+            var settings = configurator.InvokeSafe(new WebDocuSettings());
+            ValidateMarkdownPackageSettings(settings);
+            UploadMarkdownPackage(settings)
                 .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
+        }
 
-            File.Delete(tempPath);
+        static void ValidateMarkdownPackageSettings(WebDocuSettings settings)
+        {
+            if (string.IsNullOrWhiteSpace(settings.MarkdownPackagePath))
+            {
+                throw new ArgumentException("A Markdown package path is required.", nameof(settings.MarkdownPackagePath));
+            }
+
+            if (string.IsNullOrWhiteSpace(settings.Version))
+            {
+                throw new ArgumentException("An explicit documentation version is required for Markdown uploads.", nameof(settings.Version));
+            }
+
+            if (!File.Exists(settings.MarkdownPackagePath))
+            {
+                throw new FileNotFoundException("The Markdown package was not found.", settings.MarkdownPackagePath);
+            }
         }
 
         public static string GetVersionFromNuGetPackageFilename(string nuGetPackagePath, string projectName)
@@ -79,7 +117,7 @@ namespace Fallout.WebDocu
                     {
                         Serilog.Log.Debug($"WebDocu return Http status 409 - Conflict. This means that there is likely already an existing" +
                             $" combination of version and project present. The settings are enabled to skip this." +
-                            $" Asserts will also not be uploaded.");
+                            $" Markdown packages and assets will also not be uploaded.");
                         return;
                     }
 
@@ -87,11 +125,37 @@ namespace Fallout.WebDocu
                 }
             }
 
+            if (!string.IsNullOrWhiteSpace(settings.MarkdownPackagePath))
+            {
+                await UploadMarkdownPackage(settings);
+            }
+
             if (settings.AssetFilePaths?.Any() == true)
             {
                 foreach (var assetFilePath in settings.AssetFilePaths)
                 {
                     await UploadAssetFile(assetFilePath, settings);
+                }
+            }
+        }
+
+        static async Task UploadMarkdownPackage(WebDocuSettings settings)
+        {
+            using (var docsStream = File.OpenRead(settings.MarkdownPackagePath))
+            using (var httpClient = new HttpClient())
+            using (var request = new HttpRequestMessage(HttpMethod.Post, settings.DocuBaseUrl.TrimEnd('/') + "/API/MarkdownDocuments/Upload"))
+            using (var requestContent = new MultipartFormDataContent())
+            {
+                requestContent.Add(new StringContent(settings.DocuApiKey), "ApiKey");
+                requestContent.Add(new StringContent(settings.Version), "Version");
+                requestContent.Add(new StreamContent(docsStream), "MarkdownPackage", Path.GetFileName(settings.MarkdownPackagePath));
+                request.Content = requestContent;
+                using (var response = await httpClient.SendAsync(request))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new Exception("Markdown upload failed with status code: " + response.StatusCode + Environment.NewLine + await response.Content.ReadAsStringAsync());
+                    }
                 }
             }
         }

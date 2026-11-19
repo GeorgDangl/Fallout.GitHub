@@ -41,6 +41,12 @@ namespace Fallout.WebDocu
             return toolSettings;
         }
 
+        public static WebDocuSettings SetMarkdownPackagePath(this WebDocuSettings toolSettings, string markdownPackagePath)
+        {
+            toolSettings.MarkdownPackagePath = markdownPackagePath;
+            return toolSettings;
+        }
+
         public static WebDocuSettings SetSkipForVersionConflicts(this WebDocuSettings toolSettings, bool skipForVersionConflicts)
         {
             toolSettings.SkipForVersionConflicts = skipForVersionConflicts;

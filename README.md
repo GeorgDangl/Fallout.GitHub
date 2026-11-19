@@ -137,6 +137,45 @@ The `DocuApiEndpoint` should look like this:
 
     https://docs.dangl-it.com/API/Projects/Upload
 
+### Uploading a Markdown Package
+
+On WebDocu servers supporting Markdown documentation, optionally upload a Markdown ZIP
+in addition to the HTML documentation:
+
+```csharp
+WebDocuTasks.WebDocu(s => s
+    .SetDocuBaseUrl(DocuBaseUrl)
+    .SetDocuApiKey(DocuApiKey)
+    .SetSourceDirectory(htmlDirectory)
+    .SetVersion("1.2.3")
+    .SetMarkdownPackagePath(markdownZipPath));
+```
+
+The HTML package is uploaded first, then the Markdown ZIP, then any assets. Without
+`SetMarkdownPackagePath`, the existing HTML and asset upload behavior is unchanged.
+`SetSkipForVersionConflicts(true)` skips Markdown and assets too when the HTML upload
+returns HTTP 409. Markdown upload errors always fail the task and prevent asset uploads.
+
+To add or replace Markdown for an existing HTML version without reuploading HTML or assets:
+
+```csharp
+WebDocuTasks.MarkdownPackageUpload(s => s
+    .SetDocuBaseUrl(DocuBaseUrl)
+    .SetDocuApiKey(DocuApiKey)
+    .SetVersion("1.2.3")
+    .SetMarkdownPackagePath(markdownZipPath));
+```
+
+Both forms require an explicit version and an existing ZIP file. They send `ApiKey`,
+`Version`, and `MarkdownPackage` to `API/MarkdownDocuments/Upload` using multipart form data.
+The standalone task can retry a failed Markdown upload after HTML was successfully published.
+Reuploading replaces the version's entire Markdown corpus, without changing its HTML or assets.
+
+The ZIP should contain UTF-8 `.md` or `.markdown` files with relative paths. Other files
+are ignored by the server. Server limits are 10 MiB compressed, 20 MiB decompressed Markdown,
+1 MiB per document, 1000 documents, and 2000 ZIP entries. Paths must be unique ignoring case,
+at most 300 characters long, and contain no absolute paths or `.` / `..` segments.
+
 ## License
 
 [This project is available under the MIT license.](LICENSE.md)
