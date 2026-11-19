@@ -125,10 +125,9 @@ class Build : FalloutBuild
             DotNetTest(x => x
                 .SetNoBuild(true)
                 .SetProjectFile(RootDirectory / "test" / "Fallout.WebDocu.Tests")
-                .SetTestAdapterPath(".")
                 .CombineWith(c => new[] { "net10.0" }
-                    .Select(framework => c.SetFramework(framework).SetLoggers($"xunit;LogFilePath={OutputDirectory / $"tests-{framework}.xml"}"))
-                ), degreeOfParallelism: Environment.ProcessorCount, completeOnFailure: true);
+                    .Select(framework => c.SetFramework(framework)
+                    .SetProcessAdditionalArguments($"-- --report-spekt-xunit --report-spekt-xunit-filename {OutputDirectory / $"tests-{framework}.xml"}"))), degreeOfParallelism: Environment.ProcessorCount, completeOnFailure: true);
         });
 
     Target Pack => _ => _

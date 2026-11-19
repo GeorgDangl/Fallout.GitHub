@@ -13,12 +13,16 @@ namespace Fallout.WebDocu
         public virtual string DocuBaseUrl { get; internal set; }
         public virtual string Version { get; internal set; }
         public virtual string MarkdownChangelog { get; internal set; }
+        /// <summary>
+        /// Optional Markdown ZIP to upload for the same explicit version after the HTML package.
+        /// </summary>
+        public virtual string MarkdownPackagePath { get; internal set; }
         public virtual string[] AssetFilePaths { get; set; }
         /// <summary>
         /// If WebDocu returns a Http 409 status code, this means that the combination of
         /// package and version already exists. If this property is set to true, it will
         /// just skip the process then and exit, otherwise it will report a failure. 
-        /// When it skips, assets are also not uploaded.
+        /// When it skips, Markdown packages and assets are also not uploaded.
         /// </summary>
         public virtual bool SkipForVersionConflicts { get; internal set; }
     }
